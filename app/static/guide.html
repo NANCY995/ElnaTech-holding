@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guide Marque - Elna Tech</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --elna-violet: #6B21A8;
+            --elna-bleu: #0EA5E9;
+            --elna-turquoise: #14B8A6;
+            --gris-fonce: #1E293B;
+            --gris-clair: #64748B;
+            --blanc: #FFFFFF;
+            --corail: #F97316;
+            --vert: #22C55E;
+            --rouge: #EF4444;
+            --gris-border: #E2E8F0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            min-height: 100vh;
+            color: var(--gris-fonce);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--elna-violet) 0%, #9333ea 100%);
+            padding: 24px 48px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(107, 33, 168, 0.3);
+        }
+        
+        .logo {
+            font-family: 'Inter', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--elna-violet);
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 24px;
+        }
+        
+        .nav a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .nav a:hover {
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 48px 0;
+        }
+        
+        .hero h1 {
+            font-family: 'Inter', sans-serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--gris-fonce);
+            margin-bottom: 16px;
+        }
+        
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--elna-violet), var(--elna-turquoise));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            color: var(--gris-clair);
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+        
+        .chat-container {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .chat-header {
+            background: linear-gradient(135deg, var(--elna-violet), var(--elna-bleu));
+            padding: 20px 24px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .ai-avatar {
+            width: 44px;
+            height: 44px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        
+        .chat-header h3 {
+            font-family: 'Inter', sans-serif;
+            font-size: 18px;
+        }
+        
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 16px 20px;
+            border-radius: 16px;
+            line-height: 1.6;
+        }
+        
+        .message.user {
+            align-self: flex-end;
+            background: var(--elna-violet);
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .message.ai {
+            align-self: flex-start;
+            background: #F1F5F9;
+            color: var(--gris-fonce);
+            border-bottom-left-radius: 4px;
+        }
+        
+        .message .source {
+            font-size: 11px;
+            color: var(--gris-clair);
+            margin-top: 8px;
+            font-style: italic;
+        }
+        
+        .chat-input {
+            padding: 20px 24px;
+            border-top: 1px solid var(--gris-border);
+            display: flex;
+            gap: 12px;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 14px 20px;
+            border: 2px solid var(--gris-border);
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: 'Roboto', sans-serif;
+            transition: all 0.3s;
+        }
+        
+        .chat-input input:focus {
+            outline: none;
+            border-color: var(--elna-violet);
+            box-shadow: 0 0 0 3px rgba(107, 33, 168, 0.1);
+        }
+        
+        .chat-input button {
+            padding: 14px 28px;
+            background: var(--elna-violet);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .chat-input button:hover {
+            background: #9333ea;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(107, 33, 168, 0.3);
+        }
+        
+        .quick-questions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 0 24px 16px;
+        }
+        
+        .quick-questions button {
+            padding: 8px 16px;
+            background: #F1F5F9;
+            border: none;
+            border-radius: 20px;
+            font-size: 13px;
+            color: var(--gris-fonce);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .quick-questions button:hover {
+            background: var(--elna-violet);
+            color: white;
+        }
+        
+        .colors-section {
+            margin-top: 48px;
+            padding: 32px;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+        
+        .colors-section h2 {
+            font-family: 'Inter', sans-serif;
+            font-size: 28px;
+            margin-bottom: 24px;
+            color: var(--gris-fonce);
+        }
+        
+        .color-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .color-card {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+        
+        .color-preview {
+            height: 80px;
+        }
+        
+        .color-info {
+            padding: 16px;
+        }
+        
+        .color-name {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .color-hex {
+            font-family: monospace;
+            color: var(--gris-clair);
+            font-size: 14px;
+        }
+        
+        .loading {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--gris-clair);
+            padding: 12px 16px;
+        }
+        
+        .loading::after {
+            content: '';
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--gris-border);
+            border-top-color: var(--elna-violet);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 32px;
+            color: var(--gris-clair);
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">E</div>
+            Elna Tech
+        </div>
+        <nav class="nav">
+            <a href="/">Accueil</a>
+            <a href="/admin">Admin</a>
+            <a href="/market">Market</a>
+            <a href="/insights">Insights</a>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <div class="hero">
+            <h1>Guide <span>d'Identité Visuelle</span></h1>
+            <p>Assistant IA pour répondre à toutes vos questions sur la charte graphique Elna Tech</p>
+        </div>
+        
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="ai-avatar">🎨</div>
+                <div>
+                    <h3>Assistant Marque</h3>
+                    <small>Je réponds à vos questions sur le guide</small>
+                </div>
+            </div>
+            
+            <div class="quick-questions">
+                <button onclick="askQuestion('Quelles sont les couleurs principales?')">Couleurs principales</button>
+                <button onclick="askQuestion('Quelle police utiliser pour les titres?')">Typographie</button>
+                <button onclick="askQuestion('Comment styliser les boutons?')">Boutons</button>
+                <button onclick="askQuestion('Quelle est la zone de protection du logo?')">Logo</button>
+                <button onclick="askQuestion('Comment animer les éléments?')">Animations</button>
+                <button onclick="askQuestion('Quelle grille utiliser?')">Grille</button>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+                <div class="message ai">
+                    Bonjour ! 👋 Je suis votre assistant pour le guide d'identité visuelle Elna Tech.
+                    <br><br>
+                    Posez-moi vos questions sur les couleurs, la typographie, les composants UI, le logo, ou tout autre élément de la charte graphique !
+                    <div class="source">Source: Guide Elna Tech</div>
+                </div>
+            </div>
+            
+            <div class="chat-input">
+                <input type="text" id="questionInput" placeholder="Posez votre question..." onkeypress="handleKeyPress(event)">
+                <button onclick="sendQuestion()">Envoyer</button>
+            </div>
+        </div>
+        
+        <div class="colors-section">
+            <h2>🎨 Palette de Couleurs</h2>
+            <div class="color-grid" id="colorGrid">
+                <!-- Colors loaded via API -->
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+        <p>Elna Tech Holding © 2026 - Guide d'Identité Visuelle</p>
+    </footer>
+    
+    <script>
+        const API_BASE = window.location.origin;
+        
+        async function loadColors() {
+            try {
+                const response = await fetch(`${API_BASE}/api/guide/colors`);
+                const data = await response.json();
+                
+                const colors = [
+                    { name: 'Elna Violet', hex: data.primary.violet.hex, rgb: data.primary.violet.rgb },
+                    { name: 'Elna Bleu', hex: data.primary.bleu.hex, rgb: data.primary.bleu.rgb },
+                    { name: 'Elna Turquoise', hex: data.primary.turquoise.hex, rgb: data.primary.turquoise.rgb },
+                    { name: 'Gris Foncé', hex: data.secondary.gris_fonce.hex, rgb: '' },
+                    { name: 'Gris Clair', hex: data.secondary.gris_clair.hex, rgb: '' },
+                    { name: 'Corail', hex: data.accent.corail.hex, rgb: '' },
+                    { name: 'Vert', hex: data.accent.vert.hex, rgb: '' },
+                    { name: 'Rouge', hex: data.accent.rouge.hex, rgb: '' }
+                ];
+                
+                document.getElementById('colorGrid').innerHTML = colors.map(c => `
+                    <div class="color-card">
+                        <div class="color-preview" style="background: ${c.hex}"></div>
+                        <div class="color-info">
+                            <div class="color-name">${c.name}</div>
+                            <div class="color-hex">${c.hex}${c.rgb ? '<br>' + c.rgb : ''}</div>
+                        </div>
+                    </div>
+                `).join('');
+            } catch(e) {
+                console.error('Error loading colors:', e);
+            }
+        }
+        
+        async function askQuestion(text) {
+            document.getElementById('questionInput').value = text;
+            sendQuestion();
+        }
+        
+        function handleKeyPress(e) {
+            if (e.key === 'Enter') sendQuestion();
+        }
+        
+        async function sendQuestion() {
+            const input = document.getElementById('questionInput');
+            const question = input.value.trim();
+            if (!question) return;
+            
+            const messages = document.getElementById('chatMessages');
+            
+            // Add user message
+            messages.innerHTML += `<div class="message user">${question}</div>`;
+            messages.innerHTML += `<div class="message ai loading">L'assistant réfléchit...</div>`;
+            
+            input.value = '';
+            messages.scrollTop = messages.scrollHeight;
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/guide/ask`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ question })
+                });
+                
+                const data = await response.json();
+                
+                // Remove loading and add answer
+                messages.innerHTML = messages.innerHTML.replace(
+                    /<div class="message ai loading">.*?<\/div>/,
+                    `<div class="message ai">${data.answer.replace(/\n/g, '<br>')}<div class="source">Source: ${data.source}</div></div>`
+                );
+            } catch(e) {
+                messages.innerHTML += `<div class="message ai" style="color: var(--rouge);">Erreur: ${e.message}</div>`;
+            }
+            
+            messages.scrollTop = messages.scrollHeight;
+        }
+        
+        // Load colors on page load
+        loadColors();
+    </script>
+</body>
+</html>

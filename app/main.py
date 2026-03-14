@@ -24,6 +24,7 @@ from app.api.kyc import router as kyc_router
 from app.api.notifications import router as notifications_router
 from app.api.mobile_money import router as mobile_money_router
 from app.api.webhooks import router as webhooks_router
+from app.api.guide import router as guide_router
 
 # Créer les tables
 Base.metadata.create_all(bind=engine)
@@ -76,6 +77,7 @@ app.include_router(kyc_router, prefix="/api")
 app.include_router(notifications_router, prefix="/api")
 app.include_router(mobile_money_router, prefix="/api")
 app.include_router(webhooks_router, prefix="/api")
+app.include_router(guide_router, prefix="/api")
 
 
 @app.get("/")
@@ -94,6 +96,12 @@ def insights_page():
 def credit_page():
     """Page Elna Credit"""
     return FileResponse(str(STATIC_DIR / "credit.html"))
+
+
+@app.get("/guide")
+def guide_page():
+    """Page Guide d'Identité Visuelle"""
+    return FileResponse(str(STATIC_DIR / "guide.html"))
 
 
 @app.get("/comply")
