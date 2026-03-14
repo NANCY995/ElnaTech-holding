@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elna Insights - Analytics 📊</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; }
+
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo { display: flex; align-items: center; gap: 12px; }
+        .logo-icon {
+            width: 50px; height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px;
+        }
+        .logo h1 {
+            font-size: 28px; font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        }
+
+        .nav { display: flex; gap: 10px; }
+        .nav-btn {
+            padding: 10px 20px; border-radius: 10px; border: none;
+            background: var(--light); color: var(--dark); cursor: pointer;
+            font-weight: 500; transition: all 0.3s;
+        }
+        .nav-btn:hover { background: var(--primary-light); }
+        .nav-btn.active { background: var(--primary); color: white; }
+        
+        .eco-link {
+            padding: 10px 16px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+            transition: all 0.3s;
+        }
+        .eco-link:hover { transform: translateY(-2px); }
+        .eco-pay { background: #6366f1; color: white; }
+        .eco-credit { background: #fbbf24; color: #92400e; }
+        .eco-comply { background: #06b6d4; color: white; }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 1000px) {
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        .stat-card {
+            background: white; border-radius: 20px; padding: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .stat-label { font-size: 14px; color: var(--gray); }
+        .stat-value { font-size: 32px; font-weight: 800; margin: 10px 0; }
+        .stat-trend { font-size: 13px; display: flex; align-items: center; gap: 5px; }
+        .stat-trend.up { color: var(--secondary); }
+        .stat-trend.down { color: var(--danger); }
+
+        .card {
+            background: white; border-radius: 20px; padding: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .card-title { font-size: 18px; font-weight: 600; margin-bottom: 20px; }
+
+        .health-score {
+            display: flex; align-items: center; gap: 30px;
+        }
+
+        .score-circle {
+            width: 120px; height: 120px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 48px; font-weight: 800;
+            background: linear-gradient(135deg, var(--secondary), #059669);
+            color: white;
+        }
+
+        .score-details { flex: 1; }
+        .score-factor {
+            display: flex; justify-content: space-between;
+            padding: 8px 0; border-bottom: 1px solid var(--border);
+        }
+
+        .chart-container { height: 300px; position: relative; }
+
+        .table-container { overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid var(--border); }
+        th { font-weight: 600; color: var(--gray); font-size: 13px; text-transform: uppercase; }
+        tr:hover { background: var(--light); }
+
+        .empty-state {
+            text-align: center; padding: 60px; color: var(--gray);
+        }
+        .empty-state-icon { font-size: 64px; margin-bottom: 20px; }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 800px) { .grid-2 { grid-template-columns: 1fr; } }
+
+        .category-bar {
+            margin-bottom: 15px;
+        }
+        .category-label {
+            display: flex; justify-content: space-between; margin-bottom: 5px; font-size: 14px;
+        }
+        .category-progress {
+            height: 8px; background: var(--border); border-radius: 4px; overflow: hidden;
+        }
+        .category-fill {
+            height: 100%; background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+            border-radius: 4px; transition: width 0.5s ease;
+        }
+
+        .loading { text-align: center; padding: 40px; }
+        .spinner {
+            width: 40px; height: 40px;
+            border: 4px solid var(--border); border-top-color: var(--primary);
+            border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .toast-container { position: fixed; top: 20px; right: 20px; z-index: 2000; }
+        .toast {
+            background: white; border-radius: 10px; padding: 15px 20px; margin-bottom: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: flex; align-items: center; gap: 12px;
+            animation: slideIn 0.3s ease; min-width: 280px;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        .toast.success { border-left: 4px solid var(--secondary); }
+        .toast.error { border-left: 4px solid var(--danger); }
+
+        .back-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 20px; background: white; border: none;
+            border-radius: 10px; cursor: pointer; font-weight: 500;
+            margin-bottom: 20px; transition: all 0.3s;
+        }
+        .back-btn:hover { transform: translateX(-5px); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">📊</div>
+                <h1>Elna Insights</h1>
+            </div>
+            <div class="nav">
+                <button class="nav-btn active" onclick="showPage('dashboard')">📈 Dashboard</button>
+                <button class="nav-btn" onclick="showPage('transactions')">💳 Transactions</button>
+                <a href="/" class="nav-btn eco-link eco-pay">💳 Pay</a>
+                <a href="/credit" class="nav-btn eco-link eco-credit">💰 Credit</a>
+                <a href="/comply" class="nav-btn eco-link eco-comply">📋 Comply</a>
+            </div>
+        </div>
+
+        <!-- Dashboard Page -->
+        <div id="dashboard-page">
+            <!-- Stats Overview -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">💰 Total Encaissé</div>
+                    <div class="stat-value" id="totalEncaisse">0 €</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">📤 Total Dépensé</div>
+                    <div class="stat-value" id="totalDepenses">0 €</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">🔄 Transactions</div>
+                    <div class="stat-value" id="totalTransactions">0</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">🛡️ Blocages Fraude</div>
+                    <div class="stat-value" id="fraudBlocked">0</div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <!-- Health Score -->
+                <div class="card">
+                    <div class="card-title">💚 Score de Santé Financière</div>
+                    <div class="health-score">
+                        <div class="score-circle" id="healthScore">-</div>
+                        <div class="score-details" id="healthFactors">
+                            <div class="empty-state">Chargement...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Revenus par catégorie -->
+                <div class="card">
+                    <div class="card-title">📈 Revenus par Catégorie (30j)</div>
+                    <div id="revenusChart">
+                        <div class="empty-state">Aucune donnée</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cashflow Chart -->
+            <div class="card">
+                <div class="card-title">📊 Flux de Trésorerie (30 derniers jours)</div>
+                <div class="chart-container" id="cashflowChart">
+                    <div class="loading"><div class="spinner"></div></div>
+                </div>
+            </div>
+
+            <!-- Top Clients & Suppliers -->
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-title">👥 Top Clients</div>
+                    <div class="table-container">
+                        <table id="clientsTable">
+                            <thead><tr><th>Client</th><th>Total</th><th>Tx</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-title">🏢 Top Fournisseurs</div>
+                    <div class="table-container">
+                        <table id="suppliersTable">
+                            <thead><tr><th>Fournisseur</th><th>Total</th><th>Tx</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transactions Page -->
+        <div id="transactions-page" style="display: none;">
+            <button class="back-btn" onclick="showPage('dashboard')">← Retour au Dashboard</button>
+            <div class="card">
+                <div class="card-title">📊 Comparaison Mensuelle</div>
+                <div class="chart-container" id="monthlyChart">
+                    <div class="loading"><div class="spinner"></div></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        const API_URL = 'http://localhost:8000/api';
+        let token = localStorage.getItem('elna_token');
+
+        // Check auth
+        if (!token) {
+            window.location.href = '/';
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<span>${type === 'success' ? '✅' : '❌'}</span><span>${message}</span>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function showPage(page) {
+            document.getElementById('dashboard-page').style.display = page === 'dashboard' ? 'block' : 'none';
+            document.getElementById('transactions-page').style.display = page === 'transactions' ? 'block' : 'none';
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (page === 'dashboard') loadDashboard();
+            if (page === 'transactions') loadMonthly();
+        }
+
+        function goBack() {
+            window.location.href = '/';
+        }
+
+        async function loadDashboard() {
+            const headers = { 'Authorization': `Bearer ${token}` };
+            
+            try {
+                // Dashboard summary
+                const dashRes = await fetch(`${API_URL}/insights/dashboard`, { headers });
+                const dash = await dashRes.json();
+                
+                document.getElementById('totalEncaisse').textContent = formatCurrency(dash.total_encaisse);
+                document.getElementById('totalDepenses').textContent = formatCurrency(dash.total_depenses);
+                document.getElementById('totalTransactions').textContent = dash.total_transactions;
+
+                // Fraud stats
+                const fraudRes = await fetch(`${API_URL}/insights/fraude`, { headers });
+                const fraud = await fraudRes.json();
+                document.getElementById('fraudBlocked').textContent = fraud.total_blocked;
+
+                // Health score
+                const healthRes = await fetch(`${API_URL}/insights/sante`, { headers });
+                const health = await healthRes.json();
+                document.getElementById('healthScore').textContent = health.grade || '-';
+                
+                const factorsHtml = health.factors ? health.factors.map(f => `
+                    <div class="score-factor">
+                        <span>${f.name}</span>
+                        <span style="color: ${f.points > 0 ? 'var(--secondary)' : 'var(--danger)'}">${f.value}</span>
+                    </div>
+                `).join('') : '<div class="empty-state">Pas assez de données</div>';
+                document.getElementById('healthFactors').innerHTML = factorsHtml;
+
+                // Revenus par catégorie
+                const revenusRes = await fetch(`${API_URL}/insights/revenus?days=30`, { headers });
+                const revenus = await revenusRes.json();
+                renderCategories(revenus, 'revenusChart');
+
+                // Cashflow
+                const cashflowRes = await fetch(`${API_URL}/insights/cashflow?days=30`, { headers });
+                const cashflow = await cashflowRes.json();
+                renderCashflowChart(cashflow);
+
+                // Top clients
+                const clientsRes = await fetch(`${API_URL}/insights/clients?limit=5`, { headers });
+                const clients = await clientsRes.json();
+                renderTable(clients, 'clientsTable');
+
+                // Top suppliers
+                const suppliersRes = await fetch(`${API_URL}/insights/fournisseurs?limit=5`, { headers });
+                const suppliers = await suppliersRes.json();
+                renderTable(suppliers, 'suppliersTable');
+
+            } catch (err) {
+                showToast('Erreur chargement données', 'error');
+            }
+        }
+
+        async function loadMonthly() {
+            const headers = { 'Authorization': `Bearer ${token}` };
+            try {
+                const res = await fetch(`${API_URL}/insights/mensuel?months=6`, { headers });
+                const data = await res.json();
+                renderMonthlyChart(data);
+            } catch (err) {
+                showToast('Erreur', 'error');
+            }
+        }
+
+        function formatCurrency(amount) {
+            return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(amount || 0);
+        }
+
+        function renderCategories(data, containerId) {
+            if (!data || data.length === 0) {
+                document.getElementById(containerId).innerHTML = '<div class="empty-state">Aucune donnée</div>';
+                return;
+            }
+            
+            const total = data.reduce((sum, item) => sum + item.total, 0);
+            const colors = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6', '#06b6d4'];
+            
+            const html = data.map((item, i) => `
+                <div class="category-bar">
+                    <div class="category-label">
+                        <span>${item.category}</span>
+                        <span>${formatCurrency(item.total)} (${Math.round(item.total/total*100)}%)</span>
+                    </div>
+                    <div class="category-progress">
+                        <div class="category-fill" style="width: ${item.total/total*100}%; background: ${colors[i % colors.length]}"></div>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById(containerId).innerHTML = html;
+        }
+
+        function renderCashflowChart(data) {
+            if (!data || data.length === 0) {
+                document.getElementById('cashflowChart').innerHTML = '<div class="empty-state">Aucune donnée</div>';
+                return;
+            }
+
+            const maxVal = Math.max(...data.map(d => Math.max(d.encaissements, d.depenses)));
+            const html = data.map(d => `
+                <div style="display: flex; align-items: flex-end; justify-content: space-between; padding: 10px; border-bottom: 1px solid var(--border);">
+                    <div style="font-size: 12px; color: var(--gray); width: 80px;">${d.date.slice(5)}</div>
+                    <div style="flex: 1; display: flex; gap: 10px; align-items: flex-end; height: 30px;">
+                        <div style="width: 50%; height: ${d.encaissements/maxVal*100}%; background: var(--secondary); border-radius: 4px 4px 0 0;"></div>
+                        <div style="width: 50%; height: ${d.depenses/maxVal*100}%; background: var(--danger); border-radius: 4px 4px 0 0;"></div>
+                    </div>
+                    <div style="text-align: right; width: 100px;">
+                        <div style="font-size: 11px; color: var(--secondary);">+${formatCurrency(d.encaissements)}</div>
+                        <div style="font-size: 11px; color: var(--danger);">-${formatCurrency(d.depenses)}</div>
+                    </div>
+                </div>
+            `).join('');
+            document.getElementById('cashflowChart').innerHTML = html;
+        }
+
+        function renderMonthlyChart(data) {
+            const container = document.getElementById('monthlyChart');
+            if (!data || data.length === 0) {
+                container.innerHTML = '<div class="empty-state">Aucune donnée</div>';
+                return;
+            }
+
+            const maxVal = Math.max(...data.map(d => Math.max(d.encaissements, d.depenses)));
+            const html = data.map(d => `
+                <div style="display: flex; align-items: flex-end; justify-content: space-between; padding: 15px; border-bottom: 1px solid var(--border);">
+                    <div style="font-size: 14px; font-weight: 600; width: 60px;">${d.month_name}</div>
+                    <div style="flex: 1; display: flex; gap: 20px; align-items: flex-end; height: 50px; margin: 0 20px;">
+                        <div style="width: 50%; height: ${d.encaissements/maxVal*100}%; background: var(--secondary); border-radius: 8px 8px 0 0;"></div>
+                        <div style="width: 50%; height: ${d.depenses/maxVal*100}%; background: var(--danger); border-radius: 8px 8px 0 0;"></div>
+                    </div>
+                    <div style="text-align: right; width: 120px;">
+                        <div style="font-size: 13px; color: var(--secondary);">Rev: ${formatCurrency(d.encaissements)}</div>
+                        <div style="font-size: 13px; color: var(--danger);">Dép: ${formatCurrency(d.depenses)}</div>
+                    </div>
+                </div>
+            `).join('');
+            container.innerHTML = html;
+        }
+
+        function renderTable(data, tableId) {
+            const tbody = document.querySelector(`#${tableId} tbody`);
+            if (!data || data.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; color: var(--gray);">Aucune donnée</td></tr>';
+                return;
+            }
+            
+            tbody.innerHTML = data.map(item => `
+                <tr>
+                    <td>${item.name || 'Inconnu'}</td>
+                    <td>${formatCurrency(item.total)}</td>
+                    <td>${item.transactions}</td>
+                </tr>
+            `).join('');
+        }
+
+        // Load on start
+        loadDashboard();
+    </script>
+</body>
+</html>

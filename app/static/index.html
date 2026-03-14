@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elna Pay - La liberté de payer et d'être payé 💳</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --primary-light: #a5b4fc;
+            --secondary: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-radius: 20px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .logo h1 {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .user-avatar {
+            width: 45px;
+            height: 45px;
+            background: var(--primary-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        /* Main Content */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+        }
+
+        @media (max-width: 900px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Cards */
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Balance Card */
+        .balance-card {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+        }
+
+        .balance-card .card-title {
+            color: rgba(255,255,255,0.9);
+        }
+
+        .balance-amount {
+            font-size: 42px;
+            font-weight: 800;
+            margin: 20px 0;
+        }
+
+        .balance-label {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+
+        .account-number {
+            background: rgba(255,255,255,0.15);
+            padding: 12px 16px;
+            border-radius: 10px;
+            font-family: monospace;
+            font-size: 16px;
+            letter-spacing: 2px;
+        }
+
+        /* Quick Actions */
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            background: white;
+            border: 2px solid var(--border);
+            border-radius: 14px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .action-btn:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.2);
+        }
+
+        .action-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .action-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        /* Transactions */
+        .transaction-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .transaction-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.2s;
+        }
+
+        .transaction-item:hover {
+            background: var(--light);
+        }
+
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+
+        .transaction-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .transaction-icon encaissement {
+            background: #d1fae5;
+        }
+
+        .transaction-icon paiement {
+            background: #fee2e2;
+        }
+
+        .transaction-icon transfert {
+            background: #e0e7ff;
+        }
+
+        .transaction-details h4 {
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .transaction-details p {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        .transaction-right {
+            text-align: right;
+        }
+
+        .transaction-amount {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .transaction-amount.positive {
+            color: var(--secondary);
+        }
+
+        .transaction-amount.negative {
+            color: var(--danger);
+        }
+
+        .transaction-status {
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 20px;
+        }
+
+        .transaction-status.validée {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .transaction-status.rejetée {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .transaction-status.en_attente {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 450px;
+            animation: slideUp 0.3s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal h2 {
+            font-size: 22px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 15px;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-secondary {
+            flex: 1;
+        }
+
+        .btn-primary {
+            flex: 1;
+        }
+
+        /* Auth Screen */
+        .auth-screen {
+            display: none;
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .auth-screen.active {
+            display: flex;
+        }
+
+        .auth-card {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+
+        .auth-logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .auth-logo .logo-icon {
+            width: 70px;
+            height: 70px;
+            font-size: 32px;
+            margin: 0 auto 15px;
+        }
+
+        .auth-logo h2 {
+            font-size: 24px;
+            color: var(--dark);
+        }
+
+        .auth-logo p {
+            color: var(--gray);
+            margin-top: 8px;
+        }
+
+        .tabs {
+            display: flex;
+            margin-bottom: 25px;
+            background: var(--light);
+            border-radius: 10px;
+            padding: 4px;
+        }
+
+        .tab {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            background: white;
+            color: var(--primary);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        /* Fraud Alert */
+        .fraud-alert {
+            display: none;
+            background: #fef2f2;
+            border: 2px solid var(--danger);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; }
+        }
+
+        .fraud-alert.active {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .fraud-alert-icon {
+            font-size: 24px;
+        }
+
+        .fraud-alert h4 {
+            color: var(--danger);
+            margin-bottom: 4px;
+        }
+
+        .fraud-alert p {
+            font-size: 13px;
+            color: #991b1b;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--gray);
+        }
+
+        .empty-state-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        /* Loading */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* AI Badge */
+        .ai-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #8b5cf6, #6366f1);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 2000;
+        }
+
+        .toast {
+            background: white;
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.3s ease;
+            min-width: 280px;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--secondary);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--danger);
+        }
+
+        .toast.warning {
+            border-left: 4px solid var(--warning);
+        }
+    </style>
+</head>
+<body>
+    <!-- Auth Screen -->
+    <div class="auth-screen active" id="authScreen">
+        <div class="auth-card">
+            <div class="auth-logo">
+                <div class="logo-icon">💳</div>
+                <h2>Elna Pay</h2>
+                <p>La liberté de payer et d'être payé</p>
+            </div>
+            
+            <div class="tabs">
+                <div class="tab active" data-tab="login">Connexion</div>
+                <div class="tab" data-tab="register">Inscription</div>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm">
+                <div class="form-group">
+                    <label>Nom d'utilisateur</label>
+                    <input type="text" id="loginUsername" placeholder="votre_username" required>
+                </div>
+                <div class="form-group">
+                    <label>Mot de passe</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Se connecter</button>
+            </form>
+
+            <!-- Register Form -->
+            <form id="registerForm" style="display: none;">
+                <div class="form-group">
+                    <label>Nom complet</label>
+                    <input type="text" id="regFullName" placeholder="Jean Dupont" required>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" id="regEmail" placeholder="jean@exemple.fr" required>
+                </div>
+                <div class="form-group">
+                    <label>Nom d'utilisateur</label>
+                    <input type="text" id="regUsername" placeholder="jeandupont" required>
+                </div>
+                <div class="form-group">
+                    <label>Mot de passe</label>
+                    <input type="password" id="regPassword" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Créer un compte</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div class="container" id="mainApp" style="display: none;">
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">💳</div>
+                <h1>Elna Pay</h1>
+            </div>
+            <div class="user-info">
+                <span class="ai-badge">🤖 IA Active</span>
+                <div class="user-avatar" id="userAvatar">JD</div>
+                <button class="btn btn-secondary" onclick="logout()">Déconnexion</button>
+            </div>
+        </div>
+
+        <!-- Fraud Alert -->
+        <div class="fraud-alert" id="fraudAlert">
+            <span class="fraud-alert-icon">⚠️</span>
+            <div>
+                <h4>Alerte de sécurité</h4>
+                <p id="fraudMessage">Une transaction suspecte a été détectée</p>
+            </div>
+        </div>
+
+        <div class="main-grid">
+            <!-- Left Column -->
+            <div class="left-column">
+                <!-- Balance Card -->
+                <div class="card balance-card">
+                    <div class="card-title">
+                        <span>💰</span>
+                        Solde du compte
+                        <span class="ai-badge" style="margin-left: auto;">🤖 Protégé</span>
+                    </div>
+                    <div class="balance-label">Solde disponible</div>
+                    <div class="balance-amount" id="balanceAmount">0,00 €</div>
+                    <div class="account-number" id="accountNumber">FR76 •••• •••• •••• •••• ••••</div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card" style="margin-top: 20px;">
+                    <div class="card-title">
+                        <span>⚡</span>
+                        Actions rapides
+                    </div>
+                    <div class="actions-grid">
+                        <div class="action-btn" onclick="openModal('encaissement')">
+                            <div class="action-icon">📥</div>
+                            <div class="action-label">Encaisser</div>
+                        </div>
+                        <div class="action-btn" onclick="openModal('paiement')">
+                            <div class="action-icon">📤</div>
+                            <div class="action-label">Payer</div>
+                        </div>
+                        <div class="action-btn" onclick="openModal('transfert')">
+                            <div class="action-icon">🔄</div>
+                            <div class="action-label">Transférer</div>
+                        </div>
+                        <div class="action-btn" onclick="openModal('retrait')">
+                            <div class="action-icon">💵</div>
+                            <div class="action-label">Retirer</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transactions -->
+                <div class="card" style="margin-top: 20px;">
+                    <div class="card-title">
+                        <span>📊</span>
+                        Historique des transactions
+                        <span class="ai-badge" style="margin-left: auto;">🤖 IA</span>
+                    </div>
+                    <div class="loading" id="txLoading">
+                        <div class="spinner"></div>
+                        <p>Chargement...</p>
+                    </div>
+                    <div class="transaction-list" id="transactionList">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📭</div>
+                            <p>Aucune transaction pour le moment</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="right-column">
+                <!-- Stats -->
+                <div class="card">
+                    <div class="card-title">
+                        <span>📈</span>
+                        Statistiques
+                    </div>
+                    <div style="margin-top: 15px;">
+                        <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border);">
+                            <span style="color: var(--gray);">Transactions aujourd'hui</span>
+                            <strong id="todayTx">0</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border);">
+                            <span style="color: var(--gray);">Ce mois</span>
+                            <strong id="monthTx">0</strong>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; padding: 12px 0;">
+                            <span style="color: var(--gray);">Score de sécurité</span>
+                            <strong style="color: var(--secondary);">🛡️ Élevé</strong>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Info -->
+                <div class="card" style="margin-top: 20px; background: linear-gradient(135deg, #f0f9ff, #e0f2fe);">
+                    <div class="card-title">
+                        <span>🤖</span>
+                        IA de Protection
+                    </div>
+                    <p style="font-size: 14px; color: var(--gray); line-height: 1.6;">
+                        Notre IA analyse chaque transaction en temps réel pour détecter les anomalies et les tentatives de fraude avant qu'il ne soit trop tard.
+                    </p>
+                    <div style="margin-top: 15px; display: flex; gap: 10px; flex-wrap: wrap;">
+                        <span style="background: white; padding: 6px 12px; border-radius: 20px; font-size: 12px;">🔍 Détection temps réel</span>
+                        <span style="background: white; padding: 6px 12px; border-radius: 20px; font-size: 12px;">🧠 Apprentissage</span>
+                        <span style="background: white; padding: 6px 12px; border-radius: 20px; font-size: 12px;">⚡ Alertes instantanées</span>
+                    </div>
+                    
+                    <!-- Ecosystem Navigation -->
+                    <div style="margin-top: 20px; padding-top: 15px; border-top: 1px solid var(--border);">
+                        <p style="font-size: 13px; font-weight: 600; margin-bottom: 10px; color: var(--dark);">🔗 Écosystème Elna</p>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <a href="/insights" style="text-decoration: none;">
+                                <span style="background: #6366f1; color: white; padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;">📊 Insights</span>
+                            </a>
+                            <a href="/credit" style="text-decoration: none;">
+                                <span style="background: #fbbf24; color: #92400e; padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;">💰 Credit</span>
+                            </a>
+                            <a href="/comply" style="text-decoration: none;">
+                                <span style="background: #06b6d4; color: white; padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;">📋 Comply</span>
+                            </a>
+                            <a href="/market" style="text-decoration: none;">
+                                <span style="background: #f97316; color: white; padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: 500;">🛒 Market</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transaction Modal -->
+    <div class="modal-overlay" id="transactionModal">
+        <div class="modal">
+            <h2 id="modalTitle">Nouvelle transaction</h2>
+            <form id="transactionForm">
+                <div class="form-group">
+                    <label>Montant (€)</label>
+                    <input type="number" id="txAmount" step="0.01" min="0.01" placeholder="0.00" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input type="text" id="txDescription" placeholder="Motif de la transaction">
+                </div>
+                <div class="form-group" id="recipientGroup" style="display: none;">
+                    <label>Compte destinataire</label>
+                    <input type="text" id="txRecipient" placeholder="FR76...">
+                </div>
+                <div class="form-group" id="recipientNameGroup" style="display: none;">
+                    <label>Nom du destinataire</label>
+                    <input type="text" id="txRecipientName" placeholder="Nom complet">
+                </div>
+                <div class="form-group">
+                    <label>Catégorie</label>
+                    <select id="txCategory">
+                        <option value="">Sélectionner...</option>
+                        <option value="fournisseur">Fournisseur</option>
+                        <option value="client">Client</option>
+                        <option value="salaire">Salaire</option>
+                        <option value="loyer">Loyer</option>
+                        <option value="services">Services</option>
+                        <option value="autre">Autre</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Annuler</button>
+                    <button type="submit" class="btn btn-primary">Confirmer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // State
+        let token = localStorage.getItem('elna_token');
+        let currentUser = null;
+        let currentAccount = null;
+        let currentTxType = 'encaissement';
+
+        // API Base URL
+        const API_URL = 'http://localhost:8000/api';
+
+        // Check auth on load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (token) {
+                fetchUserInfo();
+            }
+            setupTabs();
+        });
+
+        // Tab switching
+        function setupTabs() {
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', () => {
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    
+                    if (tab.dataset.tab === 'login') {
+                        document.getElementById('loginForm').style.display = 'block';
+                        document.getElementById('registerForm').style.display = 'none';
+                    } else {
+                        document.getElementById('loginForm').style.display = 'none';
+                        document.getElementById('registerForm').style.display = 'block';
+                    }
+                });
+            });
+        }
+
+        // Auth handlers
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            try {
+                const formData = new FormData();
+                formData.append('username', username);
+                formData.append('password', password);
+                
+                const res = await fetch(`${API_URL}/auth/token`, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (!res.ok) throw new Error('Identifiants incorrects');
+                
+                const data = await res.json();
+                token = data.access_token;
+                localStorage.setItem('elna_token', token);
+                
+                await fetchUserInfo();
+                showToast('Connexion réussie !', 'success');
+            } catch (err) {
+                showToast(err.message, 'error');
+            }
+        });
+
+        document.getElementById('registerForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const fullName = document.getElementById('regFullName').value;
+            const email = document.getElementById('regEmail').value;
+            const username = document.getElementById('regUsername').value;
+            const password = document.getElementById('regPassword').value;
+            
+            try {
+                const res = await fetch(`${API_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ full_name: fullName, email, username, password })
+                });
+                
+                if (!res.ok) {
+                    const err = await res.json();
+                    throw new Error(err.detail || 'Erreur inscription');
+                }
+                
+                showToast('Compte créé ! Connectez-vous.', 'success');
+                document.querySelector('[data-tab="login"]').click();
+            } catch (err) {
+                showToast(err.message, 'error');
+            }
+        });
+
+        // Fetch user info
+        async function fetchUserInfo() {
+            try {
+                const res = await fetch(`${API_URL}/auth/me`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                if (!res.ok) throw new Error('Session expirée');
+                
+                currentUser = await res.json();
+                
+                // Update UI
+                document.getElementById('userAvatar').textContent = currentUser.full_name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+                
+                // Get accounts
+                await fetchAccounts();
+                
+                // Show main app
+                document.getElementById('authScreen').classList.remove('active');
+                document.getElementById('mainApp').style.display = 'block';
+            } catch (err) {
+                logout();
+            }
+        }
+
+        // Fetch accounts
+        async function fetchAccounts() {
+            try {
+                const res = await fetch(`${API_URL}/accounts/`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                const accounts = await res.json();
+                
+                if (accounts.length === 0) {
+                    // Create first account
+                    await createAccount();
+                } else {
+                    currentAccount = accounts[0];
+                    updateBalanceUI();
+                    await fetchTransactions();
+                }
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        // Create account
+        async function createAccount() {
+            try {
+                const res = await fetch(`${API_URL}/accounts/`, {
+                    method: 'POST',
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ account_type: 'professionnel' })
+                });
+                
+                currentAccount = await res.json();
+                updateBalanceUI();
+                await fetchTransactions();
+            } catch (err) {
+                showToast('Erreur création compte', 'error');
+            }
+        }
+
+        // Update balance UI
+        function updateBalanceUI() {
+            document.getElementById('balanceAmount').textContent = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(currentAccount.balance);
+            document.getElementById('accountNumber').textContent = currentAccount.account_number.replace(/(.{4})/g, '$1 ').trim();
+        }
+
+        // Fetch transactions
+        async function fetchTransactions() {
+            document.getElementById('txLoading').classList.add('active');
+            document.getElementById('transactionList').style.display = 'none';
+            
+            try {
+                const res = await fetch(`${API_URL}/transactions/`, {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                
+                const transactions = await res.json();
+                
+                document.getElementById('txLoading').classList.remove('active');
+                
+                if (transactions.length === 0) {
+                    document.getElementById('transactionList').innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state-icon">📭</div>
+                            <p>Aucune transaction pour le moment</p>
+                        </div>
+                    `;
+                } else {
+                    renderTransactions(transactions);
+                }
+                
+                // Update stats
+                const today = new Date().toDateString();
+                const todayTx = transactions.filter(t => new Date(t.created_at).toDateString() === today).length;
+                document.getElementById('todayTx').textContent = todayTx;
+                document.getElementById('monthTx').textContent = transactions.length;
+            } catch (err) {
+                document.getElementById('txLoading').classList.remove('active');
+                showToast('Erreur chargement transactions', 'error');
+            }
+        }
+
+        // Render transactions
+        function renderTransactions(transactions) {
+            const html = transactions.map(tx => {
+                const isPositive = tx.transaction_type === 'encaissement';
+                const icon = {
+                    'encaissement': '📥',
+                    'paiement': '📤',
+                    'transfert': '🔄',
+                    'retrait': '💵'
+                }[tx.transaction_type];
+                
+                return `
+                    <div class="transaction-item">
+                        <div class="transaction-left">
+                            <div class="transaction-icon ${tx.transaction_type}">${icon}</div>
+                            <div class="transaction-details">
+                                <h4>${tx.description || tx.transaction_type}</h4>
+                                <p>${new Date(tx.created_at).toLocaleDateString('fr-FR')} • ${tx.category || 'Non catégorisé'}</p>
+                            </div>
+                        </div>
+                        <div class="transaction-right">
+                            <div class="transaction-amount ${isPositive ? 'positive' : 'negative'}">
+                                ${isPositive ? '+' : '-'}${new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(tx.amount)}
+                            </div>
+                            <span class="transaction-status ${tx.status}">${tx.status}</span>
+                            ${tx.fraud_score > 0.5 ? '<span style="font-size:10px;">🤖</span>' : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('transactionList').innerHTML = html;
+            document.getElementById('transactionList').style.display = 'block';
+        }
+
+        // Modal
+        function openModal(type) {
+            currentTxType = type;
+            const titles = {
+                'encaissement': '📥 Encaisser',
+                'paiement': '📤 Payer un fournisseur',
+                'transfert': '🔄 Transférer',
+                'retrait': '💵 Retirer'
+            };
+            
+            document.getElementById('modalTitle').textContent = titles[type];
+            
+            const showRecipient = ['paiement', 'transfert'].includes(type);
+            document.getElementById('recipientGroup').style.display = showRecipient ? 'block' : 'none';
+            document.getElementById('recipientNameGroup').style.display = showRecipient ? 'block' : 'none';
+            
+            document.getElementById('transactionModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('transactionModal').classList.remove('active');
+            document.getElementById('transactionForm').reset();
+        }
+
+        // Transaction form
+        document.getElementById('transactionForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const amount = parseFloat(document.getElementById('txAmount').value);
+            const description = document.getElementById('txDescription').value;
+            const recipient = document.getElementById('txRecipient').value;
+            const recipientName = document.getElementById('txRecipientName').value;
+            const category = document.getElementById('txCategory').value;
+            
+            try {
+                const res = await fetch(`${API_URL}/transactions/`, {
+                    method: 'POST',
+                    headers: { 
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        account_id: currentAccount.id,
+                        transaction_type: currentTxType,
+                        amount,
+                        description,
+                        recipient_account: recipient,
+                        recipient_name: recipientName,
+                        category
+                    })
+                });
+                
+                const tx = await res.json();
+                
+                closeModal();
+                
+                // Check fraud result
+                if (tx.fraud_analysis) {
+                    if (tx.fraud_analysis.is_fraudulent) {
+                        document.getElementById('fraudAlert').classList.add('active');
+                        document.getElementById('fraudMessage').textContent = tx.fraud_analysis.fraud_reason || 'Transaction bloquée pour des raisons de sécurité';
+                        setTimeout(() => {
+                            document.getElementById('fraudAlert').classList.remove('active');
+                        }, 5000);
+                        showToast('Transaction bloquée par l\'IA 🔒', 'error');
+                    } else {
+                        showToast(`Transaction ${tx.status} ! ${tx.fraud_analysis.fraud_score > 0.3 ? '🤖 Vérifiée par l\'IA' : ''}`, tx.status === 'validee' ? 'success' : 'warning');
+                    }
+                }
+                
+                // Refresh data
+                await fetchAccounts();
+            } catch (err) {
+                showToast('Erreur transaction', 'error');
+            }
+        });
+
+        // Logout
+        function logout() {
+            token = null;
+            currentUser = null;
+            currentAccount = null;
+            localStorage.removeItem('elna_token');
+            document.getElementById('mainApp').style.display = 'none';
+            document.getElementById('authScreen').classList.add('active');
+        }
+
+        // Toast
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <span>${type === 'success' ? '✅' : type === 'error' ? '❌' : '⚠️'}</span>
+                <span>${message}</span>
+            `;
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Close modal on overlay click
+        document.getElementById('transactionModal').addEventListener('click', (e) => {
+            if (e.target.id === 'transactionModal') closeModal();
+        });
+    </script>
+</body>
+</html>
