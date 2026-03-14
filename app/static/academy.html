@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elna Academy - Formation Personnalisée</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --elna-violet: #6B21A8;
+            --elna-bleu: #0EA5E9;
+            --elna-turquoise: #14B8A6;
+            --elna-vert: #22C55E;
+            --elna-corail: #F97316;
+            --elna-gris: #1E293B;
+            --elna-gris-clair: #64748B;
+        }
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--elna-violet), #9333ea);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+        
+        .logo-icon {
+            width: 44px;
+            height: 44px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--elna-violet);
+            font-size: 20px;
+        }
+        
+        nav {
+            display: flex;
+            gap: 24px;
+        }
+        
+        nav a {
+            color: rgba(255,255,255,0.9);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+        
+        .hero {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+        
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--elna-bleu), var(--elna-turquoise));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            color: #94a3b8;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        /* Comparison Table */
+        .comparison-section {
+            margin-bottom: 60px;
+        }
+        
+        .comparison-section h2 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 32px;
+        }
+        
+        .comparison-table {
+            background: rgba(30, 41, 59, 0.8);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(148, 163, 184, 0.2);
+        }
+        
+        .table-header {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            background: rgba(15, 23, 42, 0.8);
+            padding: 20px;
+            font-weight: 700;
+            font-size: 18px;
+        }
+        
+        .table-header .sans { color: #EF4444; }
+        .table-header .avec { color: var(--elna-vert); }
+        .table-header .feature { text-align: center; }
+        
+        .table-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            padding: 20px;
+            border-top: 1px solid rgba(148, 163, 184, 0.1);
+            align-items: center;
+        }
+        
+        .table-row:hover {
+            background: rgba(107, 33, 168, 0.1);
+        }
+        
+        .sans-col { color: #EF4444; font-size: 20px; }
+        .avec-col { color: var(--elna-vert); font-size: 20px; }
+        .feature-col { text-align: center; color: #94a3b8; }
+        
+        /* Courses Section */
+        .courses-section h2 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 32px;
+        }
+        
+        .categories {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+        
+        .category-btn {
+            padding: 10px 20px;
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .category-btn:hover, .category-btn.active {
+            background: var(--elna-violet);
+            border-color: var(--elna-violet);
+        }
+        
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        
+        .course-card {
+            background: rgba(30, 41, 59, 0.8);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .course-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--elna-violet);
+            box-shadow: 0 10px 40px rgba(107, 33, 168, 0.3);
+        }
+        
+        .course-icon {
+            font-size: 40px;
+            margin-bottom: 16px;
+        }
+        
+        .course-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .course-desc {
+            color: #94a3b8;
+            font-size: 14px;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        
+        .course-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 13px;
+            color: #64748b;
+        }
+        
+        .course-level {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .level-debutant { background: rgba(34, 197, 94, 0.2); color: var(--elna-vert); }
+        .level-intermediaire { background: rgba(249, 115, 22, 0.2); color: var(--elna-corail); }
+        .level-avance { background: rgba(239, 68, 68, 0.2); color: #EF4444; }
+        
+        /* Paths Section */
+        .paths-section {
+            margin-top: 60px;
+        }
+        
+        .paths-section h2 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 32px;
+        }
+        
+        .paths-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .path-card {
+            background: linear-gradient(135deg, rgba(107, 33, 168, 0.3), rgba(14, 165, 233, 0.3));
+            border: 1px solid rgba(107, 33, 168, 0.5);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .path-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 40px rgba(107, 33, 168, 0.4);
+        }
+        
+        .path-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+        
+        .path-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .path-desc {
+            font-size: 14px;
+            color: #94a3b8;
+            margin-bottom: 12px;
+        }
+        
+        .path-meta {
+            font-size: 13px;
+            color: var(--elna-turquoise);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <div class="logo-icon">E</div>
+            Elna Tech
+        </div>
+        <nav>
+            <a href="/">Accueil</a>
+            <a href="/ecosystem">Écosystème</a>
+            <a href="/guide">Guide</a>
+        </nav>
+    </header>
+    
+    <div class="container">
+        <div class="hero">
+            <h1>Elna <span>Academy</span></h1>
+            <p>Formation personnalisée basée sur vos lacunes réelles - L'IA adapte le parcours à votre profil</p>
+        </div>
+        
+        <!-- Comparison Table -->
+        <div class="comparison-section">
+            <h2>Ce que cela change concrètement</h2>
+            <div class="comparison-table">
+                <div class="table-header">
+                    <div class="sans">⛔ Sans Elna Tech</div>
+                    <div class="feature">Fonctionnalité</div>
+                    <div class="avec">✅ Avec Elna Tech</div>
+                </div>
+                
+                <div class="table-row">
+                    <div class="sans-col">📱</div>
+                    <div class="feature-col">Paiements</div>
+                    <div class="avec-col">💳 Wallet unifié</div>
+                </div>
+                
+                <div class="table-row">
+                    <div class="sans-col">❓</div>
+                    <div class="feature-col">Visibilité financière</div>
+                    <div class="avec-col">📊 Tableau de bord en direct</div>
+                </div>
+                
+                <div class="table-row">
+                    <div class="sans-col">🚫</div>
+                    <div class="feature-col">Financement</div>
+                    <div class="avec-col">💰 Credit basé sur activité</div>
+                </div>
+                
+                <div class="table-row">
+                    <div class="sans-col">😰</div>
+                    <div class="feature-col">Fiscalité</div>
+                    <div class="avec-col">📋 Déclarations automatiques</div>
+                </div>
+                
+                <div class="table-row">
+                    <div class="sans-col">😞</div>
+                    <div class="feature-col">Clients</div>
+                    <div class="avec-col">🤖 IA détecte désengagement</div>
+                </div>
+                
+                <div class="table-row">
+                    <div class="sans-col">⚠️</div>
+                    <div class="feature-col">Fournisseurs</div>
+                    <div class="avec-col">🤝 Marketplace vérifié</div>
+                </div>
+                
+                <div class="table-row">
+                    <div class="sans-col">📚</div>
+                    <div class="feature-col">Formation</div>
+                    <div class="avec-col">🎓 Parcours personnalisé</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Courses -->
+        <div class="courses-section">
+            <h2>📚 Catalogue de Formations</h2>
+            <div class="categories">
+                <button class="category-btn active" onclick="filterCourses('all')">Tous</button>
+                <button class="category-btn" onclick="filterCourses('finance')">💰 Finance</button>
+                <button class="category-btn" onclick="filterCourses('marketing')">📱 Marketing</button>
+                <button class="category-btn" onclick="filterCourses('gestion')">⚙️ Gestion</button>
+                <button class="category-btn" onclick="filterCourses('digital')">💻 Digital</button>
+                <button class="category-btn" onclick="filterCourses('conformite')">⚖️ Conformité</button>
+            </div>
+            <div class="courses-grid" id="coursesGrid"></div>
+        </div>
+        
+        <!-- Paths -->
+        <div class="paths-section">
+            <h2>🚀 Parcours Recommandés</h2>
+            <div class="paths-grid" id="pathsGrid"></div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Elna Tech Holding © 2026 - Elna Academy</p>
+    </footer>
+    
+    <script>
+        const courses = [
+            {id:1, title:"Maîtriser la Trésorerie", category:"finance", level:"debutant", duration:"45 min", icon:"💰"},
+            {id:2, title:"Comprendre ses États Financiers", category:"finance", level:"intermediaire", duration:"1h30", icon:"📊"},
+            {id:3, title:"Stratégie de Prix et Marges", category:"finance", level:"avance", duration:"1h", icon:"🏷️"},
+            {id:4, title:"Marketing Digital pour PME", category:"marketing", level:"debutant", duration:"1h", icon:"📱"},
+            {id:5, title:"Fidéliser ses Clients", category:"marketing", level:"intermediaire", duration:"45 min", icon:"❤️"},
+            {id:6, title:"Gestion d'Entreprise", category:"gestion", level:"debutant", duration:"2h", icon:"⚙️"},
+            {id:7, title:"Recruter et Manager", category:"gestion", level:"intermediaire", duration:"1h15", icon:"👥"},
+            {id:8, title:"Outils Digitaux Essentiels", category:"digital", level:"debutant", duration:"1h30", icon:"💻"},
+            {id:9, title:"E-commerce et Vente en Ligne", category:"digital", level:"intermediaire", duration:"2h", icon:"🛒"},
+            {id:10, title:"Conformité Fiscale Simplifiée", category:"conformite", level:"debutant", duration:"1h", icon:"📋"},
+            {id:11, title:"Statuts Juridiques et Régimes", category:"conformite", level:"intermediaire", duration:"45 min", icon:"⚖️"},
+            {id:12, title:"Prévention des Fraudes", category:"conformite", level:"avance", duration:"30 min", icon:"🛡️"}
+        ];
+        
+        const paths = [
+            {id:1, title:"起点: Gestion de Base", icon:"🚀", duration:"4h15", courses:[1,6,8]},
+            {id:2, title:"Croissance: Marketing", icon:"📈", duration:"3h45", courses:[4,5,9]},
+            {id:3, title:"Sécurité: Conformité", icon:"🔒", duration:"2h15", courses:[10,11,12]},
+            {id:4, title:"Expert: Finance Avancée", icon:"⭐", duration:"3h45", courses:[2,3,7]}
+        ];
+        
+        function filterCourses(category) {
+            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const filtered = category === 'all' ? courses : courses.filter(c => c.category === category);
+            renderCourses(filtered);
+        }
+        
+        function renderCourses(courseList) {
+            document.getElementById('coursesGrid').innerHTML = courseList.map(c => `
+                <div class="course-card">
+                    <div class="course-icon">${c.icon}</div>
+                    <div class="course-title">${c.title}</div>
+                    <div class="course-desc">Formation adaptée à votre niveau</div>
+                    <div class="course-meta">
+                        <span class="course-level level-${c.level}">${c.level}</span>
+                        <span>⏱️ ${c.duration}</span>
+                        <span>📦 ${c.id} modules</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+        
+        function renderPaths() {
+            document.getElementById('pathsGrid').innerHTML = paths.map(p => `
+                <div class="path-card">
+                    <div class="path-icon">${p.icon}</div>
+                    <div class="path-title">${p.title}</div>
+                    <div class="path-meta">${p.courses.length} formations • ${p.duration}</div>
+                </div>
+            `).join('');
+        }
+        
+        renderCourses(courses);
+        renderPaths();
+    </script>
+</body>
+</html>
