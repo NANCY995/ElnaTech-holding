@@ -1,0 +1,18 @@
+name: elna-pay
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.12
+  - pip
+  - pip:
+    - fastapi
+    - uvicorn
+    - sqlalchemy
+    - pydantic
+    - python-jose
+    - passlib
+    - python-multipart
+    - PyPDF2
+    - pdfplumber
+    - httpx
