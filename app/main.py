@@ -25,6 +25,7 @@ from app.api.notifications import router as notifications_router
 from app.api.mobile_money import router as mobile_money_router
 from app.api.webhooks import router as webhooks_router
 from app.api.guide import router as guide_router
+from app.api.ecosystem import router as ecosystem_router
 
 # Créer les tables
 Base.metadata.create_all(bind=engine)
@@ -78,6 +79,7 @@ app.include_router(notifications_router, prefix="/api")
 app.include_router(mobile_money_router, prefix="/api")
 app.include_router(webhooks_router, prefix="/api")
 app.include_router(guide_router, prefix="/api")
+app.include_router(ecosystem_router, prefix="/api")
 
 
 @app.get("/")
@@ -102,6 +104,12 @@ def credit_page():
 def guide_page():
     """Page Guide d'Identité Visuelle"""
     return FileResponse(str(STATIC_DIR / "guide.html"))
+
+
+@app.get("/ecosystem")
+def ecosystem_page():
+    """Page Cercle Vertueux"""
+    return FileResponse(str(STATIC_DIR / "ecosystem.html"))
 
 
 @app.get("/comply")
